@@ -1,0 +1,9 @@
+# WAVEX
+
+Audio summarizer AI 
+
+## INSTALLATION
+
+## GETTING STARTED
+
+## ARCHITECTURE
