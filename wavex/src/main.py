@@ -8,10 +8,8 @@ from pprint import pprint
 
 
 config = {
-    "temperature": 0.7,
     "max_length": 3000,
-    "top_k": 10,
-    "num_return": 1
+    'min_length': 30
 }
 
 class Wavex:
@@ -20,7 +18,9 @@ class Wavex:
         self.summarizer = summarizer
 
     def summarize_from_audio(self, audio) -> str:
-        return self.summarizer.generate(self.transcriber.transcribe(audio))
+        transcription = self.transcriber.transcribe(audio)
+        pprint(transcription)
+        return self.summarizer.generate(transcription)
 
 def retrieve_args():
     parser = argparse.ArgumentParser()
