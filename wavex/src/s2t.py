@@ -5,8 +5,8 @@ from transformers import WhisperProcessor, WhisperForConditionalGeneration
 # sample = ds[0]["audio"]
 
 class WhisperTranscriber:
-    def __init__(self, laguage) -> None:
-        self.language = laguage
+    def __init__(self, language) -> None:
+        self.language = language
         self.make_processor()
 
 

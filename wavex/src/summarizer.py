@@ -18,8 +18,9 @@ class Summarizer:
                 ```{text}```
                 SUMMARY:
             """
+    
 
-    def __init__(self, config, model_name) -> None:
+    def __init__(self, config: dict, model_name: str='') -> None:
         self.config = config
         self.model_name = model_name
         agent = self.get_agent(model_name)
@@ -30,15 +31,15 @@ class Summarizer:
             # torch_dtype=torch.bfloat16,
             trust_remote_code=True,
             device_map="auto",
-            max_length=config['model']['max_length'],
+            max_length=config['max_length'],
             do_sample=True,
-            top_k=config['model']['top_k'],
-            num_return_sequences=config['model']['num_return'],
+            top_k=config['top_k'],
+            num_return_sequences=config['num_return'],
             pad_token_id=agent.tokenizer.eos_token_id
         )
 
         llm = HuggingFacePipeline(pipeline=pipeline, model_kwargs={
-                                  'temperature': config['model']['temperature']})
+                                  'temperature': config['temperature']})
         prompt = PromptTemplate(template=Summarizer.template, input_variables=["text"])
         self.llm_chain = LLMChain(prompt=prompt, llm=llm)
 
