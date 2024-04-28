@@ -5,6 +5,11 @@ from langchain_community.llms.huggingface_pipeline import HuggingFacePipeline
 from langchain_core.prompts.prompt import PromptTemplate
 # import torch
 
+class Agent:
+    def __init__(self, model, tokenizer) -> None:
+        self.model = model
+        self.tokenizer = tokenizer
+
 
 class Summarizer:
     template = """
@@ -38,7 +43,9 @@ class Summarizer:
         self.llm_chain = LLMChain(prompt=prompt, llm=llm)
 
     def get_agent(self, model_name):
-        pass
+        model = AutoModelForCausalLM.from_pretrained(model_name, use_safetensors=True, device_map='auto')
+        tokenizer = AutoTokenizer.from_pretrained(model_name, device_map='auto')
+        return Agent(model, tokenizer)
 
     def generate(self, text: str) -> str:
         return self.llm_chain.invoke(text)
