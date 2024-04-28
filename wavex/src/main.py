@@ -6,13 +6,22 @@ import pathlib
 import os
 
 
-class Chain:
-    def __init__(self, summarizer, transcriber) -> None:
+class Wavex:
+    def __init__(self, summarizer: Summarizer, transcriber: WhisperTranscriber) -> None:
         self.transcriber = transcriber
         self.summarizer = summarizer
 
     def summarize_from_audio(self, audio) -> str:
-        return ''
+        return self.summarizer.generate(self.transcriber.transcribe(audio))
 
 def main():
-    pass
+    
+
+    Wavex(
+        Summarizer(
+
+        ),
+        WhisperTranscriber(
+
+        )
+    ).summarize_from_audio()

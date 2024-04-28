@@ -6,7 +6,7 @@ from transformers import WhisperProcessor, WhisperForConditionalGeneration
 
 class WhisperTranscriber:
     def __init__(self, laguage) -> None:
-        self.language
+        self.language = laguage
         self.make_processor()
 
 
@@ -17,10 +17,17 @@ class WhisperTranscriber:
             language=self.language, task="transcribe")
     
 
-    def transcribe(self, audio):
-        # input_features = processor(
-        #     sample["array"], sampling_rate=sample["sampling_rate"], return_tensors="pt").input_features
-        # predicted_ids = model.generate(input_features, forced_decoder_ids=self.forced_decoder_ids)
-        # transcription = processor.batch_decode(predicted_ids, skip_special_tokens=True)
-        # [' Mr. Quilter is the apostle of the middle classes and we are glad to welcome his gospel.']        
+    def __generate_trasncription(self, sample):
+        input_features = self.processor(
+            sample["array"], sampling_rate=sample["sampling_rate"], return_tensors="pt").input_features
+        predicted_ids = self.model.generate(input_features, forced_decoder_ids=self.forced_decoder_ids)
+        return self.processor.batch_decode(predicted_ids, skip_special_tokens=True)
+    
+    def __format_sample(self, sample): 
         pass
+
+    def __format_output(self, output) -> str:
+        pass
+
+    def transcribe(self, sample) -> str:
+        return self.__format_output(self.__generate_trasncription(self.__format_sample(sample)))
