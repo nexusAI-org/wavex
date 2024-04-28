@@ -13,7 +13,7 @@ pip install -r requirements.txt
 
 All's set! Now, you can use it like this:
 ```sh
-python wavex.py <audio_file> 
+python wavex <audio_file> 
 ```
 
 Additionally, if you wish to use wavex as a library, all you have to do is:

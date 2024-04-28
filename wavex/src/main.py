@@ -1,9 +1,7 @@
-from transformers import AutoModelForSpeechSeq2Seq, AutoTokenizer
 from src.s2t import WhisperTranscriber
 from src.summarizer import Summarizer
 import argparse
 import pathlib
-from IPython.display import Audio, display
 from pprint import pprint
 
 
@@ -24,7 +22,7 @@ class Wavex:
 
 def retrieve_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-l', '--language', type=str, required=True)
+    parser.add_argument('-l', '--language', type=str, default='en')
     parser.add_argument('args', nargs='+', type=str)
     return parser.parse_args()
 

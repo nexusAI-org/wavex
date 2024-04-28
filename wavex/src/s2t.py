@@ -3,9 +3,6 @@ import librosa
 import numpy as np
 from transformers import WhisperProcessor, WhisperForConditionalGeneration
 
-# ds = load_dataset("hf-internal-testing/librispeech_asr_dummy",
-#                   "clean", split="validation")
-# sample = ds[0]["audio"]
 
 class WhisperTranscriber:
     def __init__(self, language, chunk_size=30) -> None:
@@ -25,17 +22,12 @@ class WhisperTranscriber:
         transcription = ''
         for i in range(0, int(duration), self.chunk_size):
             start_time = int(np.floor(i * len(audio) / duration))
-            end_time = min(i + self.chunk_size, duration)
+            end_time = min(int((start_time + self.chunk_size)
+                           * len(audio) / duration), len(audio))
 
-            # Print chunk boundaries and lengths for debugging
             print(f"Chunk {i+1}: Start - {start_time}, End - {end_time}")
 
-            # Handle last chunk (optional, include remaining audio)
-            if end_time == duration:
-                chunk_audio = audio[start_time:]
-            else:
-                chunk_audio = audio[start_time:int(
-                    end_time * len(audio) / duration)]
+            chunk_audio = audio[start_time:end_time]
 
             # Print chunk audio length for debugging
             print(f"Chunk {i+1} Length: {len(chunk_audio)}")
