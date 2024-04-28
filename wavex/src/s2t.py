@@ -1,3 +1,6 @@
+import pathlib
+import librosa
+import numpy as np
 from transformers import WhisperProcessor, WhisperForConditionalGeneration
 
 # ds = load_dataset("hf-internal-testing/librispeech_asr_dummy",
@@ -16,18 +19,17 @@ class WhisperTranscriber:
         self.forced_decoder_ids = self.processor.get_decoder_prompt_ids(
             language=self.language, task="transcribe")
     
-
-    def __generate_trasncription(self, sample):
+    def __generate_transcription(self, audio, sampling_rate):
         input_features = self.processor(
-            sample["array"], sampling_rate=sample["sampling_rate"], return_tensors="pt").input_features
+            audio, sampling_rate=sampling_rate, return_tensors="pt").input_features
         predicted_ids = self.model.generate(input_features, forced_decoder_ids=self.forced_decoder_ids)
         return self.processor.batch_decode(predicted_ids, skip_special_tokens=True)
     
-    def __format_sample(self, sample): 
-        pass
+    def __format_sample(self, sample) -> tuple[np.ndarray, float]: 
+        return librosa.load(pathlib.Path(sample))
 
     def __format_output(self, output) -> str:
-        pass
+        return output[0]
 
-    def transcribe(self, sample) -> str:
-        return self.__format_output(self.__generate_trasncription(self.__format_sample(sample)))
+    def transcribe(self, sample_path: str) -> str:
+        return self.__format_output(self.__generate_transcription(*self.__format_sample(sample_path)))

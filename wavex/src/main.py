@@ -3,6 +3,7 @@ from src.s2t import WhisperTranscriber
 from src.summarizer import Summarizer
 import argparse
 import pathlib
+from IPython.display import Audio, display
 from pprint import pprint
 
 
@@ -34,5 +35,5 @@ def main():
     rets = []
     wavex = Wavex(Summarizer(config), WhisperTranscriber(language))
     for audio in audios:
-        rets.append(wavex.summarize_from_audio(audio))
+        rets.append(wavex.summarize_from_audio(pathlib.Path(audio)))
     pprint(rets)
