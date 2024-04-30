@@ -4,20 +4,18 @@ import argparse
 import pathlib
 from pprint import pprint
 
-
 config = {
-    "max_length": 3000,
-    'min_length': 30
+    'language': 'en',
 }
 
 class Wavex:
     def __init__(self, summarizer: Summarizer, transcriber: WhisperTranscriber) -> None:
         self.transcriber = transcriber
-        self.summarizer = summarizer
+        # self.summarizer = summarizer
 
     def summarize_from_audio(self, audio) -> str:
         transcription = self.transcriber.transcribe(audio)
-        pprint(transcription)
+        # pprint(transcription)
         return self.summarizer.generate(transcription)
 
 def retrieve_args():
