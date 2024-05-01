@@ -11,6 +11,8 @@ class Wavex:
 
     def summarize_from_audio(self, audio) -> str:
         transcription = self.transcriber.transcribe(audio)
+        with open('transcription.txt', 'w') as f:
+            f.write(transcription)
         if not hasattr(self, 'summarizer'):
             if self.configs.get('max_length', None) is None:
                 self.configs['max_length'] = 1000
