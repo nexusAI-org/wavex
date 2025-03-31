@@ -1,2 +1,4 @@
 **__pycache__
 sample.mp3
+*.txt
+!requirements.txt

@@ -1,4 +1,4 @@
-from src.s2t import WhisperTranscriber
+from src.stt import WhisperTranscriber
 from src.summarizer import Summarizer
 import argparse
 import pathlib
